@@ -1,59 +1,89 @@
 import styles from "./panel.module.scss";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getSelectedSex, getSelectedYear } from "../../app/app-selectors";
-import { setSelectedYear, setSelectedSex } from "../../app/app-actions";
+import {
+  getCountryOptions,
+  getSelectedCountry,
+  getSelectedSex,
+  getSelectedYear,
+} from "../../app/app-selectors";
+import {
+  setSelectedYear,
+  setSelectedSex,
+  setSelectedCountry,
+} from "../../app/app-actions";
+import Select, { DefaultOptionType } from "antd/es/select";
+import { TSex } from "../../app/types";
+import LineChart from "./lineChart";
+import Slider from "antd/es/slider";
 
 export const Panel = () => {
   const dispatch = useAppDispatch();
 
   const year = useAppSelector(getSelectedYear);
   const sex = useAppSelector(getSelectedSex);
+  const country = useAppSelector(getSelectedCountry);
 
-  const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSelectedYear(+e.target.value));
+  const countiresOptions = useAppSelector(getCountryOptions);
+
+  const handleYearChange = (value: number) => {
+    dispatch(setSelectedYear(value));
   };
 
-  const handleSexChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(
-      setSelectedSex(e.target.value as "Both sexes" | "Female" | "Male")
-    );
+  const handleSexChange = (value: TSex) => {
+    dispatch(setSelectedSex(value));
   };
+
+  const handleCountryChange = (value: string) => {
+    dispatch(setSelectedCountry(value));
+  };
+
+  const SEX_OPTIONS: DefaultOptionType[] = [
+    { value: "Both sexes", label: "Both sexes" },
+    { value: "Female", label: "Female" },
+    { value: "Male", label: "Male" },
+    { value: "Ratio", label: "Male/Female Ratio" },
+  ];
 
   return (
     <div className={styles.panelWrapper}>
       <div className={styles.panel}>
-        <h1>Suicide Rates</h1>
-        <div>Select Year</div>
         <div>
-          <label>
-            Year:{" "}
-            <input
-              type="range"
-              min="2000"
-              max="2019"
+          <h1>Suicide Rates</h1>
+
+          <span className={styles.slider}>
+            Year:
+            <Slider
+              className={styles.sliderEl}
+              min={2000}
+              max={2019}
               value={year as number}
               onChange={handleYearChange}
             />
-            {year}
-          </label>
+            <span className={styles.year}>{year}</span>
+          </span>
           <br />
-          <label>
-            By Sex:{" "}
-            <select value={sex} onChange={handleSexChange}>
-              <option value="Both sexes">Total</option>
-              <option value="Male">Men</option>
-              <option value="Female">Women</option>
-            </select>
-          </label>
+          <span className={styles.selectGroup}>
+            Sex:
+            <Select
+              onChange={handleSexChange}
+              className={styles.selector}
+              options={SEX_OPTIONS}
+              defaultValue={sex}
+            />
+          </span>
         </div>
-
-        <div>Worldwide</div>
-        <p>Тут будет график, но выделен отдельный год</p>
-        <div>By Country</div>
-        <p>
-          Тут можно выбрать отдельную страну (а может стоит встроить в блок
-          выше)
-        </p>
+        <div>
+          <div className={styles.statistics}>
+            Statistics:
+            <Select
+              onChange={handleCountryChange}
+              className={styles.selector}
+              options={countiresOptions}
+              value={country}
+            />
+          </div>
+          <LineChart />
+        </div>
       </div>
     </div>
   );

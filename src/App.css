@@ -6,7 +6,13 @@
 .layout {
   display: flex;
   flex-direction: row;
-  overflow: auto;
-  align-items: top;
-  flex: 1;
+  overflow: hidden;
+  width: 100vw;
+}
+
+@media (max-width: 1020px) {
+  .layout {
+    flex-direction: column;
+    flex-direction: column-reverse;
+  }
 }
