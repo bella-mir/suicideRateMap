@@ -47,34 +47,33 @@ export const Panel = () => {
   return (
     <div className={styles.panelWrapper}>
       <div className={styles.panel}>
-        <div>
-          <h1>Suicide Rates</h1>
+        <h1>Suicide Rates</h1>
 
-          <span className={styles.slider}>
-            Year:
-            <Slider
-              className={styles.sliderEl}
-              min={2000}
-              max={2019}
-              value={year as number}
-              onChange={handleYearChange}
-            />
-            <span className={styles.year}>{year}</span>
-          </span>
-          <br />
-          <span className={styles.selectGroup}>
-            Sex:
+        <div className={styles.slider}>
+          Year:
+          <Slider
+            className={styles.sliderEl}
+            min={2000}
+            max={2019}
+            value={year as number}
+            onChange={handleYearChange}
+          />
+          <span className={styles.year}>{year}</span>
+        </div>
+
+        <div className={styles.row}>
+          <div className={styles.selectGroup}>
+            <div>Sex:</div>
             <Select
               onChange={handleSexChange}
               className={styles.selector}
               options={SEX_OPTIONS}
               defaultValue={sex}
             />
-          </span>
-        </div>
-        <div>
-          <div className={styles.statistics}>
-            Statistics:
+          </div>
+
+          <div className={styles.selectGroup}>
+            <div>Statistics:</div>
             <Select
               onChange={handleCountryChange}
               className={styles.selector}
@@ -82,8 +81,8 @@ export const Panel = () => {
               value={country}
             />
           </div>
-          <LineChart />
         </div>
+        <LineChart />
       </div>
     </div>
   );

@@ -9,27 +9,19 @@
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    gap: 2rem;
+    align-items: center;
 
-    .statistics {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      gap: 10px;
-      .selector {
-        width: 200px;
-      }
-    }
     .selectGroup {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: left;
+      text-align: left;
       width: 100%;
       gap: 10px;
+      flex-direction: column;
 
       .selector {
-        width: 200px;
+        width: 150px;
       }
     }
 
@@ -55,4 +47,9 @@
     width: 100vw;
     height: auto;
   }
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
 }

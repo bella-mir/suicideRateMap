@@ -58,7 +58,6 @@ export const WorldMap = () => {
 
     const geoPathMap = d3.geoPath().projection(projection);
 
-    // Создаем цветовую шкалу для ratio
     const colorScale = d3
       .scaleSequential(d3.interpolateRdYlBu) // Красный -> Желтый -> Синий
       .domain([maxRate, minRate]); // Обратный порядок, чтобы красный был высоким значением
